@@ -80,7 +80,11 @@ class OptomaProjector:
         port: int = DEFAULT_PORT,
         password: str | None = None,
     ) -> None:
-        """Initialize the projector client."""
+        """Initialize the projector client.
+
+        The optional password is used only for PJLink authentication and does not
+        affect the primary TCP/Telnet control connection.
+        """
         self._host = host
         self._port = port
         self._password = password
@@ -160,8 +164,11 @@ class OptomaProjector:
                 self._writer.close()
                 try:
                     await self._writer.wait_closed()
-                except Exception:  # noqa: S110
-                    pass
+                except Exception as err:
+                    _LOGGER.debug(
+                        "Error while closing projector connection: %s",
+                        err,
+                    )
                 self._writer = None
                 self._reader = None
 
@@ -203,8 +210,8 @@ class OptomaProjector:
                 for listener in self._listeners:
                     try:
                         listener(message)
-                    except Exception as ex:
-                        _LOGGER.exception("Error in broadcast listener: %s", ex)
+                    except Exception:
+                        _LOGGER.exception("Error in broadcast listener")
 
             except asyncio.TimeoutError:
                 continue
@@ -267,7 +274,7 @@ class OptomaProjector:
         try:
             model_response = await self._send_command(CMD_GET_MODEL)
             if model_response.startswith(RESPONSE_OK):
-                # Parse model type from response (e.g., "OK6" -> "Optoma UHD")
+                # Parse model type from response (e.g., code "6" -> "Optoma UHD")
                 model_code = model_response[2:]
                 info["model"] = self._parse_model_type(model_code)
         except OptomaCommandError as ex:
@@ -322,22 +329,29 @@ class OptomaProjector:
 
     async def get_power_state(self) -> str:
         """Get power state using PJLink."""
-        try:
+
+        def _get_power() -> str:
             with PJLinkProjector.from_address(self._host, PJLINK_PORT) as projector:
                 if self._password:
                     projector.authenticate(self._password)
-                power_state = projector.get_power()
-                return power_state
+                return projector.get_power()
+
+        try:
+            return await asyncio.to_thread(_get_power)
         except (ProjectorError, TimeoutError, OSError) as ex:
             raise OptomaConnectionError(f"Failed to get power state: {ex}") from ex
 
     async def set_power(self, state: str) -> None:
         """Set power state using PJLink."""
-        try:
+
+        def _set_power() -> None:
             with PJLinkProjector.from_address(self._host, PJLINK_PORT) as projector:
                 if self._password:
                     projector.authenticate(self._password)
                 projector.set_power(state)
+
+        try:
+            await asyncio.to_thread(_set_power)
         except (ProjectorError, TimeoutError, OSError) as ex:
             raise OptomaConnectionError(f"Failed to set power state: {ex}") from ex
 
