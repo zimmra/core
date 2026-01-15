@@ -98,8 +98,8 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
         finally:
             try:
                 tn.close()
-            except Exception:  # noqa: S110
-                pass
+            except Exception as err:  # noqa: S110
+                _LOGGER.debug("Failed to close telnet connection: %s", err)
 
     try:
         device_info = await hass.async_add_executor_job(_connect_and_validate)
