@@ -2310,6 +2310,7 @@ pypck==0.9.9
 # homeassistant.components.pglab
 pypglab==0.0.5
 
+# homeassistant.components.optoma_uhd60
 # homeassistant.components.pjlink
 pypjlink2==1.2.1
 

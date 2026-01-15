@@ -1,0 +1,46 @@
+[
+
+	{ "description": "Get Current Input", "telnet_command": "~00124 1", "Example Response": "{[OK1, OK01]=HDMI1, OK15=HDMI2, [OK5, OK05]=VGA}"},
+	{ "description": "Set Input HDMI1", "telnet_command": "~0012 1", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Set Input HDMI2", "telnet_command": "~0012 15", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Set Input VGA", "telnet_command": "~0012 5", "Example Response": "P (pass), F (fail)" },
+
+	{ "description": "Get MAC Address", "telnet_command": "~00555 1", "Example Response": "OK00:50:41:88:99:61" },
+	{ "description": "Get Software Version", "telnet_command": "~00122 1", "Example Response": "OKC015" },
+	{ "description": "Get Serial Number", "telnet_command": "~00353 1", "Example Response": "OKQU72812952" },
+	{ "description": "Get Lamp Hours", "telnet_command": "~00108 1", "Example Response": "OK02777" },
+	{ "description": "Get Model Type", "telnet_command": "~00151 1", "Example Response": "OK1=Optoma SVGA, OK2=Optoma XGA, OK3=Optoma WXGA, OK4=Optoma 1080P, OK5=Optoma WUXGA, OK6=Optoma UHD" },
+
+	{ "description": "Set Lamp Mode: ECO", "telnet_command": "~00110 2", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Set Lamp Mode: BRIGHT", "telnet_command": "~00110 1", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Set Lamp Mode: DYNAMIC", "telnet_command": "~00110 4", "Example Response": "P (pass), F (fail)" },
+
+	{ "description": "Set BrilliantColor (#: 1-10)", "telnet_command": "~0034 #", "Example Response": "P (pass), F (fail)" },
+
+	{ "description": "Get Display Mode", "telnet_command": "~00123 1", "Example Responses": "{Ok03=Cinema, Ok02=Bright, Ok11=Film, Ok14=Vivid,Ok05=User, Ok21=HDR}" },
+	{ "description": "Set Display Mode:  CINEMA", "telnet_command": "~0020 3", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Set Display Mode:  BRIGHT", "telnet_command": "~0020 2", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Set Display Mode:  FILM", "telnet_command": "~0020 11", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Set Display Mode:  VIVID", "telnet_command": "~0020 16", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Set Display Mode:  USER", "telnet_command": "~0020 5", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Set Display Mode:  HDR", "telnet_command": "~0020 21", "Example Response": "P (pass), F (fail)" },
+
+	{ "description": "Re-Sync HDMI", "telnet_command": "~0001 1", "Example Response": "P (pass), F (fail)" },
+
+	{ "description": "Up", "telnet_command": "~00140 10", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Down", "telnet_command": "~00140 14", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Left", "telnet_command": "~00140 11", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Right", "telnet_command": "~00140 13", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Select", "telnet_command": "~00140 12", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Menu", "telnet_command": "~00140 20", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Info", "telnet_command": "~00140 40", "Example Response": "P (pass), F (fail)" },
+
+	{ "description": "Brightness Increase", "telnet_command": "~0046 2", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Brightness Decrease", "telnet_command": "~0046 1", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Set Brightness (#=-50 - 50)", "telnet_command": "~0021 #", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Get Brightness", "telnet_command": "~00125 1", "Example Response": "Ok#" },
+	{ "description": "Contrast Increase", "telnet_command": "~0047 2", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Contrast Decrease", "telnet_command": "~0047 1", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Set Contrast (#=-50 - 50)", "telnet_command": "~0022 #", "Example Response": "P (pass), F (fail)" },
+	{ "description": "Get Contrast", "telnet_command": "~00126 1", "Example Response": "Ok#" }
+]
