@@ -3,31 +3,36 @@
 from __future__ import annotations
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import Platform
+from homeassistant.const import CONF_HOST, Platform
 from homeassistant.core import HomeAssistant
+
+from .projector import OptomaProjector
 
 _PLATFORMS: list[Platform] = [Platform.MEDIA_PLAYER]
 
-# TODO Create ConfigEntry type alias with API object
-# TODO Rename type alias and update all entry annotations
-type New_NameConfigEntry = ConfigEntry[MyApi]  # noqa: F821
+type OptomaConfigEntry = ConfigEntry[OptomaProjector]
 
 
-# TODO Update entry annotation
-async def async_setup_entry(hass: HomeAssistant, entry: New_NameConfigEntry) -> bool:
+async def async_setup_entry(hass: HomeAssistant, entry: OptomaConfigEntry) -> bool:
     """Set up Optoma UHD60 from a config entry."""
 
-    # TODO 1. Create API instance
-    # TODO 2. Validate the API connection (and authentication)
-    # TODO 3. Store an API object for your platforms to access
-    # entry.runtime_data = MyAPI(...)
+    host = entry.data[CONF_HOST]
+    projector = OptomaProjector(host)
+    # We do not connect here as we want to do it when the entity is added
+    # or let the entity handle the connection logic to avoid startup blocking
+    # However, for this implementation, let's keep it simple and just store it.
+    # The projector client handles connection internally in its methods or via connect()
+
+    entry.runtime_data = projector
 
     await hass.config_entries.async_forward_entry_setups(entry, _PLATFORMS)
 
     return True
 
 
-# TODO Update entry annotation
-async def async_unload_entry(hass: HomeAssistant, entry: New_NameConfigEntry) -> bool:
+async def async_unload_entry(hass: HomeAssistant, entry: OptomaConfigEntry) -> bool:
     """Unload a config entry."""
-    return await hass.config_entries.async_unload_platforms(entry, _PLATFORMS)
+    if unload_ok := await hass.config_entries.async_unload_platforms(entry, _PLATFORMS):
+        await entry.runtime_data.disconnect()
+
+    return unload_ok
