@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 import logging
 import socket
 import telnetlib  # pylint: disable=deprecated-module
@@ -101,10 +100,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
             except Exception as err:  # noqa: S110
                 _LOGGER.debug("Failed to close telnet connection: %s", err)
 
-    try:
-        device_info = await hass.async_add_executor_job(_connect_and_validate)
-    except asyncio.TimeoutError as err:
-        raise TimeoutConnect from err
+    device_info = await hass.async_add_executor_job(_connect_and_validate)
 
     # Create title and unique ID
     title = f"{device_info['model']}-{device_info['serial']}"
@@ -127,8 +123,6 @@ class ConfigFlow(ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             try:
                 info = await validate_input(self.hass, user_input)
-            except TimeoutConnect:
-                errors["base"] = "timeout"
             except CannotConnect:
                 errors["base"] = "cannot_connect"
             except Exception:
@@ -148,7 +142,3 @@ class ConfigFlow(ConfigFlow, domain=DOMAIN):
 
 class CannotConnect(HomeAssistantError):
     """Error to indicate we cannot connect."""
-
-
-class TimeoutConnect(HomeAssistantError):
-    """Error to indicate connection timeout."""
