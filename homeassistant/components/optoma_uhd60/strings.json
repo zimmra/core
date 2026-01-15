@@ -10,14 +10,12 @@
     },
     "step": {
       "user": {
-        "description": "Enter the network information for your Optoma UHD60 projector",
+        "description": "Enter the IP address of your Optoma UHD60 projector",
         "data": {
-          "host": "[%key:common::config_flow::data::host%]",
-          "port": "[%key:common::config_flow::data::port%]"
+          "host": "[%key:common::config_flow::data::host%]"
         },
         "data_description": {
-          "host": "The IP address or hostname of the projector",
-          "port": "The port number for telnet communication (default: 23)"
+          "host": "The IP address or hostname of the projector"
         }
       }
     }
