@@ -80,7 +80,15 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
             model = model_response.replace("OK", "").strip()
 
             if not serial or not model:
-                raise CannotConnect
+                _LOGGER.debug(
+                    "Failed to retrieve valid device info via telnet, "
+                    "serial_response=%r, model_response=%r",
+                    serial_response,
+                    model_response,
+                )
+                raise CannotConnect(
+                    "Failed to retrieve device serial number or model via telnet"
+                )
 
             return {"serial": serial, "model": model}
 
