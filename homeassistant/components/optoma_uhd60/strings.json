@@ -5,15 +5,110 @@
     },
     "error": {
       "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
-      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "timeout": "Connection timeout, projector may be offline",
       "unknown": "[%key:common::config_flow::error::unknown%]"
     },
     "step": {
       "user": {
+        "description": "Enter the network information for your Optoma UHD60 projector",
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
-          "password": "[%key:common::config_flow::data::password%]",
-          "username": "[%key:common::config_flow::data::username%]"
+          "port": "[%key:common::config_flow::data::port%]"
+        },
+        "data_description": {
+          "host": "The IP address or hostname of the projector",
+          "port": "The port number for telnet communication (default: 23)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "lamp_hours": {
+        "name": "Lamp hours"
+      },
+      "input_source": {
+        "name": "Input source",
+        "state": {
+          "hdmi1": "HDMI 1",
+          "hdmi2": "HDMI 2",
+          "vga": "VGA"
+        }
+      },
+      "display_mode": {
+        "name": "Display mode",
+        "state": {
+          "cinema": "Cinema",
+          "bright": "Bright",
+          "film": "Film",
+          "vivid": "Vivid",
+          "user": "User",
+          "hdr": "HDR"
+        }
+      },
+      "lamp_mode": {
+        "name": "Lamp mode",
+        "state": {
+          "eco": "Eco",
+          "bright": "Bright",
+          "dynamic": "Dynamic"
+        }
+      }
+    },
+    "select": {
+      "input_source": {
+        "name": "Input source",
+        "state": {
+          "hdmi1": "HDMI 1",
+          "hdmi2": "HDMI 2",
+          "vga": "VGA"
+        }
+      },
+      "display_mode": {
+        "name": "Display mode",
+        "state": {
+          "cinema": "Cinema",
+          "bright": "Bright",
+          "film": "Film",
+          "vivid": "Vivid",
+          "user": "User",
+          "hdr": "HDR"
+        }
+      },
+      "lamp_mode": {
+        "name": "Lamp mode",
+        "state": {
+          "eco": "Eco",
+          "bright": "Bright",
+          "dynamic": "Dynamic"
+        }
+      }
+    },
+    "number": {
+      "brightness": {
+        "name": "Brightness"
+      },
+      "contrast": {
+        "name": "Contrast"
+      },
+      "brilliant_color": {
+        "name": "Brilliant color"
+      }
+    },
+    "button": {
+      "resync_hdmi": {
+        "name": "Re-sync HDMI"
+      }
+    }
+  },
+  "services": {
+    "send_command": {
+      "name": "Send command",
+      "description": "Send a raw telnet command to the projector",
+      "fields": {
+        "command": {
+          "name": "Command",
+          "description": "The telnet command to send to the projector"
         }
       }
     }
