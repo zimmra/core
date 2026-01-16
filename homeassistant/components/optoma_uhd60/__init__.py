@@ -13,7 +13,6 @@ from .const import DEFAULT_PORT
 from .projector import OptomaConnectionError, OptomaProjector
 
 _LOGGER = logging.getLogger(__name__)
-
 _PLATFORMS: list[Platform] = [Platform.MEDIA_PLAYER]
 
 type OptomaUHD60ConfigEntry = ConfigEntry[OptomaProjector]
