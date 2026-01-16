@@ -13,7 +13,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from . import OptomaConfigEntry
+from . import OptomaUHD60ConfigEntry
 from .const import DOMAIN, INPUT_SOURCE_MAP
 from .projector import OptomaConnectionError, OptomaProjector
 
@@ -35,7 +35,7 @@ PJLINK_STATE_MAP = {
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    entry: OptomaConfigEntry,
+    entry: OptomaUHD60ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up the Optoma UHD60 media player."""
