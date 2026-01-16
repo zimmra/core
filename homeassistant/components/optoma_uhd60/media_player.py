@@ -62,6 +62,7 @@ class OptomaUHD60MediaPlayer(MediaPlayerEntity):
 
     _attr_has_entity_name = True
     _attr_name = None
+    _attr_should_poll = True
     _attr_supported_features = (
         MediaPlayerEntityFeature.TURN_ON
         | MediaPlayerEntityFeature.TURN_OFF
@@ -86,7 +87,7 @@ class OptomaUHD60MediaPlayer(MediaPlayerEntity):
             sw_version=device_info.get("sw_version"),
             serial_number=device_info.get("serial_number"),
         )
-        self._attr_source_list = sorted(list(INPUT_SOURCE_MAP.values()))
+        self._attr_source_list = sorted(list(set(INPUT_SOURCE_MAP.values())))
 
     async def async_update(self) -> None:
         """Update the state of the projector."""
