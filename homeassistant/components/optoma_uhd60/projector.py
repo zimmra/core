@@ -5,7 +5,6 @@ from __future__ import annotations
 import asyncio
 from collections.abc import Callable
 import logging
-from typing import Any
 
 from pypjlink2 import Projector as PJLinkProjector
 from pypjlink2.projector import ProjectorError
